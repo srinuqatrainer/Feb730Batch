@@ -1,0 +1,8 @@
+<suite name="NewTours">
+  <test name="WelComeMercuryTours">
+    <classes>
+      <class name="com.POM.NewTours_WelComeMercuryTours"/>
+    </classes>
+ </test>
+</suite>
+ 

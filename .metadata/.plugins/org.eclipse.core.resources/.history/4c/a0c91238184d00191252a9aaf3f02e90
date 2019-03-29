@@ -1,0 +1,25 @@
+package com.OrageHRMLogInTest;
+
+public class LogInTest 
+{
+	
+	@Given("^Open FireFox browser and navigate to OrageHRM application$")
+	public void Open_FireFox_browser_and_navigate_to_OrageHRM_application() 
+	{
+	    
+	}
+
+	@When("^User enters valid UserName and Password and click on Submit button$")
+	public void User_enters_valid_UserName_and_Password_and_click_on_Submit_button() 
+	{
+	   
+	}
+
+	@Then("^User should be able to succesfully login to the Application and close the application$")
+	public void User_should_be_able_to_succesfully_login_to_the_Application_and_close_the_application() 
+	{
+	    
+	}
+	
+
+}

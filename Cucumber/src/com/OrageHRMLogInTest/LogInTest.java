@@ -1,0 +1,106 @@
+package com.OrageHRMLogInTest;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+
+public class LogInTest 
+{
+	WebDriver driver = null;
+	String url="http://127.0.0.1/orangehrm-4.0/symfony/web/index.php/auth/login";
+	
+	//String userName="admin";
+	//String password="password";
+	
+	@Given("^Open FireFox browser and navigate to OrageHRM application$")
+	public void Open_FireFox_browser_and_navigate_to_OrageHRM_application() 
+	{
+	    driver = new FirefoxDriver();
+	    driver.get(url);
+	    
+	    driver.manage().window().maximize();
+	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+	}
+
+	/*@When("^User enters valid UserName and Password and click on Submit button$")
+	public void User_enters_valid_UserName_and_Password_and_click_on_Submit_button() 
+	{
+		// <input name="txtUsername" id="txtUsername" type="text">
+				driver.findElement(By.id("txtUsername")).sendKeys(userName);
+				
+				// <input name="txtPassword" id="txtPassword" type="password">
+				WebElement Password=driver.findElement(By.name("txtPassword"));
+				Password.sendKeys(password);
+				
+				//<input type="submit" name="Submit" class="button" id="btnLogin" value="LOGIN">
+				// Identifying the element with the property and saving into a Variable - the declaration
+				// of the variable should be WebElement - since it is getting saved with an element
+				WebElement logIn=driver.findElement(By.className("button"));
+				logIn.click();
+								
+	}*/
+	
+	
+	@When("^User enters valid \"([^\"]*)\" and \"([^\"]*)\" and click on Submit button$")
+	public void User_enters_valid_and_and_click_on_Submit_button(String UserName, String Password) 
+	{
+		
+		driver.findElement(By.id("txtUsername")).sendKeys(UserName);
+		
+		
+		WebElement password=driver.findElement(By.name("txtPassword"));
+		password.sendKeys(Password);
+		
+		WebElement logIn=driver.findElement(By.className("button"));
+		logIn.click();
+
+	 
+	}
+
+	@Then("^User should be able to succesfully login to the Application and close the application$")
+	public void User_should_be_able_to_succesfully_login_to_the_Application_and_close_the_application() throws InterruptedException, IOException 
+	{
+		try{
+			String expected_text="Welcome Admin";
+	System.out.println("The expected text is :"+expected_text);
+	
+	// <a href="#" id="welcome" class="panelTrigger">Welcome Admin</a>
+	String actual_Text=driver.findElement(By.id("welcome")).getText();
+	System.out.println("The actual text is : "+actual_Text);
+	
+	if(actual_Text.contains(expected_text))
+	{
+		System.out.println("Successfully logIn - PASS");
+	}
+	
+	}
+	catch(Exception e)
+	{
+		if(driver.findElement(By.id("spanMessage")).getText().equals("Invalid credentials"))
+		{
+			File screenShot=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+			FileUtils.copyFile(screenShot, new File("./ScreenShot/img.png"));
+			
+			System.out.println("LogIn Failed - FAIL");
+			driver.quit();
+		}
+	}
+	driver.quit();
+}
+	}
+	
+
+

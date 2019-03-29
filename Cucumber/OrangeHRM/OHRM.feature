@@ -1,0 +1,11 @@
+Feature: OrangeHRM Application LogIn Functionality Testing
+Scenario Outline: Validing the logIn functionality of OrageHRM application
+
+Given Open FireFox browser and navigate to OrageHRM application
+When User enters valid "<UserName>" and "<Password>" and click on Submit button
+Then User should be able to succesfully login to the Application and close the application
+
+Examples: 
+| UserName  |  Password  |
+| admin     |  password  |
+| hello     |  password  |
